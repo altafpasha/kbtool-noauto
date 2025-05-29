@@ -1,0 +1,11 @@
+version: '3'
+services:
+  nextjs-app:
+    container_name: kbtool-njs
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '6902:3000'
+
+    restart: unless-stopped
