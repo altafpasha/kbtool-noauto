@@ -51,7 +51,7 @@ const QRGuardAdPopup = () => {
               </p>
               <div className="flex space-x-2">
                 <a
-                  href="https://play.google.com/store/apps/details?id=app.qrquard.xyz"
+                  href="https://app.qrguard.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center px-6 py-2 rounded-lg
