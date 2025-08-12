@@ -27,3 +27,10 @@ export function sendShutdownSignal() {
     console.log('🚨 Sent shutdown signal to all clients');
   }
 }
+
+export function sendResumeSignal() {
+  if (io) {
+    io.emit('resume');
+    console.log('▶️ Sent resume signal to all clients');
+  }
+}
