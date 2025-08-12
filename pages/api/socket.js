@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 
 let io;
+let siteDown = false; // in-memory flag
 
 export default function handler(req, res) {
   if (!res.socket.server.io) {
@@ -10,7 +11,6 @@ export default function handler(req, res) {
       cors: { origin: '*' }
     });
 
-    // Listen for shutdown signal
     io.on('connection', (socket) => {
       console.log('User connected:', socket.id);
     });
@@ -20,7 +20,6 @@ export default function handler(req, res) {
   res.end();
 }
 
-// Export so we can send shutdown later
 export function sendShutdownSignal() {
   if (io) {
     io.emit('shutdown');
@@ -31,6 +30,14 @@ export function sendShutdownSignal() {
 export function sendResumeSignal() {
   if (io) {
     io.emit('resume');
-    console.log('▶️ Sent resume signal to all clients');
+    console.log('✅ Sent resume signal to all clients');
   }
+}
+
+export function setSiteDownFlag(value) {
+  siteDown = value;
+}
+
+export function isSiteDown() {
+  return siteDown;
 }
