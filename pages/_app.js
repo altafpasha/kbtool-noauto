@@ -14,14 +14,16 @@ function MyApp({ Component, pageProps }) {
     };
     router.events.on('routeChangeComplete', handleRouteChange);
 
-    // Connect to Socket.io server
-    fetch('/api/socket'); // initialize socket server
-    const socket = io({
-      path: '/api/socket_io'
-    });
+    // Connect to WebSocket server
+    fetch('/api/socket');
+    const socket = io({ path: '/api/socket_io' });
 
     socket.on('shutdown', () => {
       window.location.href = '/maintenance';
+    });
+
+    socket.on('resume', () => {
+      window.location.href = '/';
     });
 
     return () => {
