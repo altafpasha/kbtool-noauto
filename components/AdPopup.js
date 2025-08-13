@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const QRGuardAdPopup = () => {
   const [isVisible, setIsVisible] = useState(false); // Initially hidden
@@ -38,10 +39,12 @@ const QRGuardAdPopup = () => {
           
           <div className="flex items-center space-x-6">
             <div className="w-24 h-24 rounded-xl overflow-hidden bg-white/20 backdrop-blur-md flex items-center justify-center p-1">
-              <img
+              <Image
                 src="/img/QRGuard-logo1-removebg.png"
                 alt="QRGuard Ai Logo"
-                className="w-20 h-20 rounded-lg"
+                width={80}
+                height={80}
+                className="rounded-lg"
               />
             </div>
             
