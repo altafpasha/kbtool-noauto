@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isSiteDown } from './pages/api/socket';
 
 export function middleware(req) {
   const url = req.nextUrl.clone();
@@ -8,8 +9,8 @@ export function middleware(req) {
     return NextResponse.next();
   }
 
-  // Block if global.maintenanceMode flag is true
-  if (global.maintenanceMode) {
+  // Block if siteDown flag is true
+  if (isSiteDown()) {
     url.pathname = '/maintenance';
     return NextResponse.redirect(url);
   }
