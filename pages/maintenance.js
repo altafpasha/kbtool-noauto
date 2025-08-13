@@ -7,7 +7,7 @@ export default function ServerError() {
           <div className="w-16 h-1 bg-red-500 mx-auto mb-4"></div>
           <h2 className="text-2xl font-semibold text-gray-700 mb-2">Server Error</h2>
           <p className="text-gray-600">
-            Something went wrong on our end. We're working to fix it.
+            Something went wrong on our end. We&apos;re working to fix it.
           </p>
         </div>
         
