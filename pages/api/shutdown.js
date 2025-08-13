@@ -1,15 +1,23 @@
-import { sendShutdownSignal, setSiteDownFlag } from './socket';
-import getConfig from 'next/config';
+// pages/api/shutdown.js
+import { sendShutdownSignal } from './socket';
 
-const { serverRuntimeConfig } = getConfig();
+export default function handler(req, res) {
+  const AUTH_PASSWORD = process.env.ADMIN_SECRET || "myStrongPassword123";
 
-export default async function handler(req, res) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || authHeader !== `Bearer ${serverRuntimeConfig.ADMIN_SECRET}`) {
-    return res.status(401).json({ error: 'Unauthorized' });
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  await setSiteDownFlag(true); // Set "down" flag for middleware
-  sendShutdownSignal();  // Kick active users instantly
-  res.status(200).json({ message: 'Site shutdown activated' });
+  const authHeader = req.headers.authorization || "";
+  const token = authHeader.replace("Bearer ", "").trim();
+
+  if (token !== AUTH_PASSWORD) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  // Your logic to enable maintenance mode here
+  global.maintenanceMode = true;
+  sendShutdownSignal(); // Kick active users instantly
+
+  res.status(200).json({ message: "Site is now in maintenance mode" });
 }
