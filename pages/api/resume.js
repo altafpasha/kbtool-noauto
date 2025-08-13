@@ -1,8 +1,11 @@
 import { sendResumeSignal, setSiteDownFlag } from './socket';
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig();
 
 export default async function handler(req, res) {
   const authHeader = req.headers.authorization;
-  if (!authHeader || authHeader !== `Bearer ${process.env.ADMIN_SECRET}`) {
+  if (!authHeader || authHeader !== `Bearer ${serverRuntimeConfig.ADMIN_SECRET}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
